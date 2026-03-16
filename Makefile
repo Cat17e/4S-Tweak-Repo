@@ -6,7 +6,6 @@ include $(THEOS)/makefiles/common.mk
 
 TWEAK_NAME = 4SPowerTools
 4SPowerTools_FILES = Tweak.x
-4SPowerTools_FRAMEWORKS = UIKit
-4SPowerTools_LDFLAGS = -ldl
+4SPowerTools_FRAMEWORKS = UIKit Foundation
 
 include $(THEOS_MAKE_PATH)/tweak.mk
