@@ -1,20 +1,18 @@
 #import <UIKit/UIKit.h>
-
-// Using a direct declaration to avoid "Missing Header" errors
-extern "C" int posix_spawn(int *, const char *, const void *, const void *, char *const [], char *const []);
+#include <dlfcn.h>
 
 %hook SpringBoard
 
 %new
 - (void)rebootDevice {
-    char *args[] = {(char *)"reboot", NULL};
-    posix_spawn(NULL, "/sbin/reboot", NULL, NULL, args, NULL);
+    int (*systemPtr)(const char *) = (int (*)(const char *))dlsym(RTLD_DEFAULT, "system");
+    if (systemPtr) systemPtr("reboot");
 }
 
 %new
 - (void)respringDevice {
-    char *args[] = {(char *)"killall", (char *)"-9", (char *)"SpringBoard", NULL};
-    posix_spawn(NULL, "/usr/bin/killall", NULL, NULL, args, NULL);
+    int (*systemPtr)(const char *) = (int (*)(const char *))dlsym(RTLD_DEFAULT, "system");
+    if (systemPtr) systemPtr("killall -9 SpringBoard");
 }
 
 %end
