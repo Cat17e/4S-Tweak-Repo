@@ -1,9 +1,0 @@
-Package: com.owner.4spowertools
-Name: 4S Power Tools
-Depends: mobilesubstrate
-Version: 1.0.0
-Architecture: iphoneos-arm
-Description: Low Power Mode and Widgets for iOS 6.
-Maintainer: Owner
-Author: Owner
-Section: Tweaks
