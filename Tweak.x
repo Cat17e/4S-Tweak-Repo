@@ -1,22 +1,20 @@
 #import <UIKit/UIKit.h>
-#include <spawn.h>
 
-extern char **environ;
+// Using a direct declaration to avoid "Missing Header" errors
+extern "C" int posix_spawn(int *, const char *, const void *, const void *, char *const [], char *const []);
 
 %hook SpringBoard
 
 %new
 - (void)rebootDevice {
-    pid_t pid;
-    const char *args[] = {"reboot", NULL};
-    posix_spawn(&pid, "/sbin/reboot", NULL, NULL, (char* const*)args, environ);
+    char *args[] = {(char *)"reboot", NULL};
+    posix_spawn(NULL, "/sbin/reboot", NULL, NULL, args, NULL);
 }
 
 %new
 - (void)respringDevice {
-    pid_t pid;
-    const char *args[] = {"killall", "-9", "SpringBoard", NULL};
-    posix_spawn(&pid, "/usr/bin/killall", NULL, NULL, (char* const*)args, environ);
+    char *args[] = {(char *)"killall", (char *)"-9", (char *)"SpringBoard", NULL};
+    posix_spawn(NULL, "/usr/bin/killall", NULL, NULL, args, NULL);
 }
 
 %end
