@@ -1,3 +1,6 @@
+export TARGET = iphone:clang:latest:6.0
+export ARCHS = armv7
+
 include $(THEOS)/makefiles/common.mk
 
 TWEAK_NAME = 4SPowerTools
