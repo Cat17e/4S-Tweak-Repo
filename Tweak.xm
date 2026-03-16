@@ -1,30 +1,33 @@
 #import <UIKit/UIKit.h>
+#include <spawn.h>
 
-// --- PART 1: POWER TOOLS LOGIC ---
-%hook SpringBoard
-- (void)applicationDidFinishLaunching:(id)application {
-    %orig;
-    // This is where we would initialize our custom "Power App" settings
+extern char **environ;
+
+// This fixes the 'exit code 2' by using a command the robot likes
+void run_cmd(const char *cmd) {
+    pid_t pid;
+    const char *argv[] = {"sh", "-c", cmd, NULL};
+    posix_spawn(&pid, "/bin/sh", NULL, NULL, (char* const*)argv, environ);
+    waitpid(pid, NULL, 0);
 }
+
+%hook SpringBoard
 %new
 - (void)rebootDevice {
-    system("reboot");
+    run_cmd("reboot");
 }
 %new
 - (void)respringDevice {
-    system("killall -9 SpringBoard");
+    run_cmd("killall -9 SpringBoard");
 }
 %new
 - (void)enterSafeMode {
-    system("touch /var/mobile/Library/Preferences/com.saurik.Safemode.flag && killall -9 SpringBoard");
+    run_cmd("touch /var/mobile/Library/Preferences/com.saurik.Safemode.flag && killall -9 SpringBoard");
 }
 %end
 
-// --- PART 2: LOW POWER MODE LOGIC ---
 %hook SBStatusBarDataManager
 - (void)_updateBatteryPercentItem {
     %orig;
-    // Logic: If Low Power Mode is "On", we dim screen and kill unnecessary radios
-    // (This requires a Flipswitch or a Settings toggle to be fully functional)
 }
 %end
