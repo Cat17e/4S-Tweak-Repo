@@ -1,9 +1,9 @@
-Package: @@PACKAGENAME@@
-Name: @@FULLPROJECTNAME@@
-Version: 0.0.1
+Package: com.owner.4spowertools
+Name: 4S Power Tools
+Depends: mobilesubstrate
+Version: 1.0.0
 Architecture: iphoneos-arm
-Description: An awesome tool of some sort!!
-Maintainer: @@USER@@
-Author: @@USER@@
-Section: System
-Tag: role::hacker
+Description: Power options and battery tweaks for iOS 6.
+Maintainer: Owner
+Author: Owner
+Section: Tweaks
