@@ -1,11 +1,10 @@
-TARGET := iphone:clang:latest:7.0
-@@KILL_RULE@@
+export ARCHS = armv7
+export TARGET = iphone:clang:14.5:6.0
 
-include @@THEOS@@/makefiles/common.mk
+include $(THEOS)/makefiles/common.mk
 
-TWEAK_NAME = @@PROJECTNAME@@
-
-@@PROJECTNAME@@_FILES = Tweak.x
-@@PROJECTNAME@@_CFLAGS = -fobjc-arc
+TWEAK_NAME = 4SPowerTools
+4SPowerTools_FILES = Tweak.x
+4SPowerTools_FRAMEWORKS = UIKit
 
 include $(THEOS_MAKE_PATH)/tweak.mk
