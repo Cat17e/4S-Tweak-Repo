@@ -11,7 +11,6 @@ jobs:
       - name: Setup Theos
         run: |
           git clone --recursive https://github.com/theos/theos.git ~/theos
-          # Install ldid (This fixes the 'command not found' error!)
           brew install ldid
           echo "THEOS=~/theos" >> $GITHUB_ENV
 
@@ -23,7 +22,11 @@ jobs:
       - name: Build Tweak
         run: |
           export THEOS=~/theos
-          # Using the search party that worked perfectly!
           SDKPATH=$(find ~/theos/sdks -name "iPhoneOS*.sdk" -type d | head -n 1)
-          echo "Robot found the SDK at: $SDKPATH"
           make package FINALPACKAGE=1 SYSROOT="$SDKPATH"
+
+      - name: Upload Tweak File
+        uses: actions/upload-artifact@v4
+        with:
+          name: 4SPowerTools-DEB
+          path: packages/*.deb
