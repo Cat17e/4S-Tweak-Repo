@@ -24,9 +24,3 @@
 }
 
 %end
-
-%hook SBStatusBarDataManager
-- (void)_updateBatteryPercentItem {
-    %orig;
-}
-%end
