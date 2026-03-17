@@ -11,6 +11,8 @@ jobs:
       - name: Setup Theos
         run: |
           git clone --recursive https://github.com/theos/theos.git ~/theos
+          # Install ldid (This fixes the 'command not found' error!)
+          brew install ldid
           echo "THEOS=~/theos" >> $GITHUB_ENV
 
       - name: Get Legacy SDKs
@@ -21,14 +23,7 @@ jobs:
       - name: Build Tweak
         run: |
           export THEOS=~/theos
-          # This looks for 6.1, 6.0, or ANY iPhoneOS sdk folder
-          SDKPATH=$(find ~/theos/sdks -name "iPhoneOS6.1.sdk" -o -name "iPhoneOS6.0.sdk" -o -name "iPhoneOS*.sdk" | head -n 1)
-          
-          if [ -z "$SDKPATH" ]; then
-            echo "ERROR: No SDK found! Listing folder contents for owner:"
-            ls -R ~/theos/sdks
-            exit 1
-          fi
-
+          # Using the search party that worked perfectly!
+          SDKPATH=$(find ~/theos/sdks -name "iPhoneOS*.sdk" -type d | head -n 1)
           echo "Robot found the SDK at: $SDKPATH"
           make package FINALPACKAGE=1 SYSROOT="$SDKPATH"
