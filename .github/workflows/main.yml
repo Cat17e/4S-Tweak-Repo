@@ -21,7 +21,14 @@ jobs:
       - name: Build Tweak
         run: |
           export THEOS=~/theos
-          # The search party: looks everywhere for the 6.1 folder
-          SDKPATH=$(find ~/theos/sdks -name "iPhoneOS6.1.sdk" -type d | head -n 1)
+          # This looks for 6.1, 6.0, or ANY iPhoneOS sdk folder
+          SDKPATH=$(find ~/theos/sdks -name "iPhoneOS6.1.sdk" -o -name "iPhoneOS6.0.sdk" -o -name "iPhoneOS*.sdk" | head -n 1)
+          
+          if [ -z "$SDKPATH" ]; then
+            echo "ERROR: No SDK found! Listing folder contents for owner:"
+            ls -R ~/theos/sdks
+            exit 1
+          fi
+
           echo "Robot found the SDK at: $SDKPATH"
           make package FINALPACKAGE=1 SYSROOT="$SDKPATH"
