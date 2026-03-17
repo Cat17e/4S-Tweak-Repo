@@ -21,5 +21,7 @@ jobs:
       - name: Build Tweak
         run: |
           export THEOS=~/theos
-          # We added 'SYSROOT' here to force the Robot to look in the right folder
-          make package FINALPACKAGE=1 SYSROOT=~/theos/sdks/iPhoneOS6.1.sdk
+          # The search party: looks everywhere for the 6.1 folder
+          SDKPATH=$(find ~/theos/sdks -name "iPhoneOS6.1.sdk" -type d | head -n 1)
+          echo "Robot found the SDK at: $SDKPATH"
+          make package FINALPACKAGE=1 SYSROOT="$SDKPATH"
