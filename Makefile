@@ -1,6 +1,5 @@
 export ARCHS = armv7
-# We changed 6.1:6.0 to just 6.1 to help the Robot find it
-export TARGET = iphone:clang:6.1
+TARGET = iphone:clang:6.1:6.0
 
 include $(THEOS)/makefiles/common.mk
 
