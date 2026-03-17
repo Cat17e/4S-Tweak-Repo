@@ -1,9 +1,9 @@
-Package: com.owner.4spowertools
-Name: 4S Power Tools
+Package: com.owner.powertools4s
+Name: 4SPowerTools
 Depends: mobilesubstrate
-Version: 1.0.0
+Version: 0.0.1
 Architecture: iphoneos-arm
-Description: Power options and battery tweaks for iOS 6.
+Description: Power options for iPhone 4S on iOS 6.
 Maintainer: Owner
 Author: Owner
 Section: Tweaks
