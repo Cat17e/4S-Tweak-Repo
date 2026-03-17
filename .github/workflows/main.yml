@@ -21,4 +21,5 @@ jobs:
       - name: Build Tweak
         run: |
           export THEOS=~/theos
-          make package FINALPACKAGE=1
+          # We added 'SYSROOT' here to force the Robot to look in the right folder
+          make package FINALPACKAGE=1 SYSROOT=~/theos/sdks/iPhoneOS6.1.sdk
