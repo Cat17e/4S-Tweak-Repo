@@ -15,12 +15,10 @@ jobs:
 
       - name: Get Legacy SDKs
         run: |
-          # This line deletes the "stuck" folder so it can't fail
           rm -rf ~/theos/sdks
-          git clone https://github.com/theos/sdks.git ~/theos/sdks
+          git clone --depth 1 https://github.com/theos/sdks.git ~/theos/sdks
 
       - name: Build Tweak
         run: |
           export THEOS=~/theos
-          # This tells the Robot: "Use the iOS 6.1 dictionary"
-          make package SDKVERSION=6.1
+          make package FINALPACKAGE=1
